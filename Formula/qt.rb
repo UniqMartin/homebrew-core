@@ -84,6 +84,8 @@ class Qt < Formula
       args << "-L#{dbus_opt}/lib"
       args << "-ldbus-1"
       args << "-dbus-linked"
+    else
+      args << "-no-dbus"
     end
 
     if build.with? "qt3support"

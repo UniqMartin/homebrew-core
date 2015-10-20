@@ -111,9 +111,6 @@ class Qt < Formula
     ENV.j1
     system "make", "install"
 
-    # what are these anyway?
-    (bin+"pixeltool.app").rmtree
-    (bin+"qhelpconverter.app").rmtree
     # remove porting file for non-humans
     (prefix+"q3porting.xml").unlink if build.without? "qt3support"
 

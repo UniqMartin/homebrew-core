@@ -1,3 +1,12 @@
+class AppleClangRequirement < Requirement
+  fatal true
+  satisfy { ENV["HOMEBREW_CC"] == "clang" }
+
+  def message
+    "Apple Clang is the only officially supported compiler."
+  end
+end
+
 class OracleHomeVarRequirement < Requirement
   fatal true
   satisfy(:build_env => false) { ENV["ORACLE_HOME"] }
@@ -60,6 +69,11 @@ class Qt5 < Formula
   depends_on :xcode => :build
 
   depends_on OracleHomeVarRequirement if build.with? "oci"
+
+  # Save users some frustration by telling them that `--cc=gcc-5` or similar
+  # won't work. It won't be picked up by the Qt build system, there is no easy
+  # way to select an arbitrary compiler, and it's not supported anyway.
+  depends_on AppleClangRequirement
 
   def install
     args = %W[

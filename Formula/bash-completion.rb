@@ -15,6 +15,8 @@ class BashCompletion < Formula
     sha256 "a0d3a54b78334afcc9b5d1aed935a1b87b2398ef4c588f98d6a61dedc8c6fa32" => :mavericks
   end
 
+  keg_only "Simplifies parallel installation with 'bash-completion2'."
+
   # Backports the following upstream patch from 2.x:
   # https://anonscm.debian.org/gitweb/?p=bash-completion/bash-completion.git;a=commitdiff_plain;h=50ae57927365a16c830899cc1714be73237bdcb2
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=740971

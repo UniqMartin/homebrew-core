@@ -34,6 +34,8 @@ class Ruby < Formula
     depends_on "autoconf" => :build
   end
 
+  keg_only :provided_by_osx
+
   option :universal
   option "with-suffix", "Suffix commands with '23'"
   option "with-doc", "Install documentation"
@@ -122,6 +124,9 @@ class Ruby < Formula
     %w[sitearchdir vendorarchdir].each do |dir|
       mkdir_p `#{ruby} -rrbconfig -e 'print RbConfig::CONFIG["#{dir}"]'`
     end
+
+    # Create the version-specific bindir used by rubygems
+    mkdir_p rubygems_bindir
   end
 
   def abi_version
@@ -133,7 +138,7 @@ class Ruby < Formula
   end
 
   def rubygems_bindir
-    "#{HOMEBREW_PREFIX}/bin"
+    "#{HOMEBREW_PREFIX}/lib/ruby/gems/#{abi_version}/bin"
   end
 
   def rubygems_config; <<-EOS.undent
@@ -198,6 +203,14 @@ class Ruby < Formula
         "#{opt_bin}/ruby#{program_suffix}"
       end
     end
+    EOS
+  end
+
+  def caveats; <<-EOS.undent
+    By default, binaries installed by gem will be placed into:
+      #{rubygems_bindir}
+
+    You may want to add this to your PATH.
     EOS
   end
 

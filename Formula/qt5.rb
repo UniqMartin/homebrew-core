@@ -14,11 +14,11 @@ end
 class Qt5 < Formula
   desc "Version 5 of the Qt framework"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/5.6/5.6.1-1/single/qt-everywhere-opensource-src-5.6.1-1.tar.xz"
-  mirror "https://www.mirrorservice.org/sites/download.qt-project.org/official_releases/qt/5.6/5.6.1-1/single/qt-everywhere-opensource-src-5.6.1-1.tar.xz"
-  sha256 "ce08a7eb54661705f55fb283d895a089b267c688fabe017062bd71b9231736db"
+  url "https://download.qt.io/official_releases/qt/5.7/5.7.0/single/qt-everywhere-opensource-src-5.7.0.tar.xz"
+  mirror "https://www.mirrorservice.org/sites/download.qt-project.org/official_releases/qt/5.7/5.7.0/single/qt-everywhere-opensource-src-5.7.0.tar.xz"
+  sha256 "a6a2632de7e44bbb790bc3b563f143702c610464a7f537d02036749041fd1800"
 
-  head "https://code.qt.io/qt/qt5.git", :branch => "5.6", :shallow => false
+  head "https://code.qt.io/qt/qt5.git", :branch => "5.7", :shallow => false
 
   bottle do
     sha256 "2aaa410f2ab2fbbddbc8c3438e43bc9f4271774c794bcae8f935fb6b1b5a82ed" => :el_capitan

@@ -34,18 +34,18 @@ class Gearman < Formula
   def install
     # https://bugs.launchpad.net/gearmand/+bug/1368926
     Dir["tests/**/*.cc", "libtest/main.cc"].each do |test_file|
-      next unless /std::unique_ptr/ === File.read(test_file)
+      next unless File.read(test_file).include?("std::unique_ptr")
       inreplace test_file, "std::unique_ptr", "std::auto_ptr"
     end
 
-    args = [
-      "--prefix=#{prefix}",
-      "--localstatedir=#{var}",
-      "--disable-silent-rules",
-      "--disable-dependency-tracking",
-      "--disable-libdrizzle",
-      "--with-boost=#{Formula["boost"].opt_prefix}",
-      "--with-sqlite3"
+    args = %W[
+      --prefix=#{prefix}
+      --localstatedir=#{var}
+      --disable-silent-rules
+      --disable-dependency-tracking
+      --disable-libdrizzle
+      --with-boost=#{Formula["boost"].opt_prefix}
+      --with-sqlite3
     ]
 
     if build.with? "cyassl"

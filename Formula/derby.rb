@@ -11,7 +11,8 @@ class Derby < Formula
 
   def install
     rm_rf Dir["bin/*.bat"]
-    libexec.install %w[lib test index.html LICENSE NOTICE RELEASE-NOTES.html KEYS docs javadoc demo]
+    libexec.install %w[KEYS LICENSE NOTICE RELEASE-NOTES.html
+                       demo docs index.html javadoc lib test]
     bin.install Dir["bin/*"]
     bin.env_script_all_files(libexec/"bin",
       Language::Java.overridable_java_home_env.merge(:DERBY_INSTALL => libexec.to_s, :DERBY_HOME => libexec.to_s))
@@ -49,7 +50,7 @@ class Derby < Formula
   end
 
   test do
-    assert_match /OS name:         Mac OS X/, shell_output("#{bin}/sysinfo")
+    assert_match "OS name:         Mac OS X", shell_output("#{bin}/sysinfo")
 
     pid = fork do
       exec "#{bin}/startNetworkServer"

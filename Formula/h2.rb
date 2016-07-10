@@ -23,13 +23,13 @@ class H2 < Formula
     #
     # https://github.com/h2database/h2database/issues/218
     h2_script = File.read("bin/h2.sh").gsub("\r\n", "\n")
-    File.open("bin/h2.sh", "w") {|f| f.write h2_script}
+    File.open("bin/h2.sh", "w") { |f| f.write h2_script }
 
     # Fix the permissions on the script
     chmod 0755, "bin/h2.sh"
 
     libexec.install Dir["*"]
-    (bin+"h2").write script
+    (bin/"h2").write script
   end
 
   plist_options :manual => "h2"

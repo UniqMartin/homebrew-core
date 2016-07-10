@@ -34,13 +34,14 @@ class Ffmbc < Formula
   patch :DATA # fix man page generation, fixed in upstream ffmpeg
 
   def install
-    args = ["--prefix=#{prefix}",
-            "--disable-debug",
-            "--disable-shared",
-            "--enable-gpl",
-            "--enable-nonfree",
-            "--cc=#{ENV.cc}",
-           ]
+    args = %W[
+      --prefix=#{prefix}
+      --disable-debug
+      --disable-shared
+      --enable-gpl
+      --enable-nonfree
+      --cc=#{ENV.cc}
+    ]
 
     args << "--enable-libx264" if build.with? "x264"
     args << "--enable-libfaac" if build.with? "faac"

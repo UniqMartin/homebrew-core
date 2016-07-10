@@ -17,9 +17,11 @@ class Dex < Formula
   depends_on "homebrew/dupes/libiconv" => :optional
 
   def install
-    args = ["prefix=#{prefix}",
-            "CC=#{ENV.cc}",
-            "HOST_CC=#{ENV.cc}"]
+    args = %W[
+      prefix=#{prefix}
+      CC=#{ENV.cc}
+      HOST_CC=#{ENV.cc}
+    ]
 
     args << "VERSION=#{version}" if build.head?
 

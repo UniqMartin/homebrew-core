@@ -22,10 +22,10 @@ class GnuTime < Formula
   patch :DATA
 
   def install
-    args = [
-      "--prefix=#{prefix}",
-      "--mandir=#{man}",
-      "--info=#{info}"
+    args = %W[
+      --prefix=#{prefix}
+      --mandir=#{man}
+      --info=#{info}
     ]
 
     args << "--program-prefix=g" if build.without? "default-names"

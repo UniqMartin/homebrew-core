@@ -37,21 +37,21 @@ class Cgal < Formula
 
   def install
     ENV.cxx11 if build.cxx11?
-    args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON",
-            "-DCMAKE_INSTALL_NAME_DIR=#{HOMEBREW_PREFIX}/lib",
-           ]
+
+    args = %W[
+      -DCMAKE_INSTALL_PREFIX=#{prefix}
+      -DCMAKE_BUILD_TYPE=Release
+      -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
+      -DCMAKE_INSTALL_NAME_DIR=#{HOMEBREW_PREFIX}/lib
+    ]
+
     if build.without? "imaging"
       args << "-DWITH_CGAL_Qt3=OFF" << "-DWITH_CGAL_Qt4=OFF" << "-DWITH_CGAL_ImageIO=OFF"
     end
-    if build.with? "eigen3"
-      args << "-DWITH_Eigen3=ON"
-    end
-    if build.with? "lapack"
-      args << "-DWITH_LAPACK=ON"
-    end
+    args << "-DWITH_Eigen3=ON" if build.with? "eigen3"
+    args << "-DWITH_LAPACK=ON" if build.with? "lapack"
     args << "."
+
     system "cmake", *args
     system "make", "install"
   end

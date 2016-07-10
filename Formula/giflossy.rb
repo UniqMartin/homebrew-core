@@ -36,6 +36,8 @@ class Giflossy < Formula
   end
 
   test do
-    system "#{bin}/gifsicle", "-O3", "--lossy=80", "-o" "out.gif", test_fixtures("test.gif")
+    test_gif = test_fixtures("test.gif")
+    system "#{bin}/gifsicle", "-O3", "--lossy=80", "-o", "out.gif", test_gif
+    assert_predicate testpath/"out.gif", :exist?
   end
 end

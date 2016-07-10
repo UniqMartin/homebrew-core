@@ -10,6 +10,7 @@ class Cmigemo < Formula
     # Patch per discussion at: https://github.com/Homebrew/homebrew/pull/7005
     patch :DATA
   end
+
   bottle do
     cellar :any
     sha256 "866dfa4f493c088c1b2eb3cff23ed04e33862f7bc5dcff0976ce5b7cb4835dd2" => :el_capitan

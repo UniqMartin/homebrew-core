@@ -20,17 +20,22 @@ class Fftw < Formula
 
   depends_on :fortran => :optional
   depends_on :mpi => [:cc, :optional]
+
   needs :openmp if build.with? "openmp"
 
   def install
-    args = ["--enable-shared",
-            "--disable-debug",
-            "--prefix=#{prefix}",
-            "--enable-threads",
-            "--disable-dependency-tracking",
-           ]
-    simd_args = ["--enable-sse2"]
-    simd_args << "--enable-avx" if ENV.compiler == :clang && Hardware::CPU.avx? && !build.bottle?
+    args = %W[
+      --enable-shared
+      --disable-debug
+      --prefix=#{prefix}
+      --enable-threads
+      --disable-dependency-tracking
+    ]
+
+    simd_args = %w[--enable-sse2]
+    if ENV.compiler == :clang && Hardware::CPU.avx? && !build.bottle?
+      simd_args << "--enable-avx"
+    end
 
     args << "--disable-fortran" if build.without? "fortran"
     args << "--enable-mpi" if build.with? "mpi"
@@ -63,7 +68,7 @@ class Fftw < Formula
   test do
     # Adapted from the sample usage provided in the documentation:
     # http://www.fftw.org/fftw3_doc/Complex-One_002dDimensional-DFTs.html
-    (testpath/"fftw.c").write <<-TEST_SCRIPT.undent
+    (testpath/"fftw.c").write <<-EOS.undent
       #include <fftw3.h>
       int main(int argc, char* *argv)
       {
@@ -78,9 +83,10 @@ class Fftw < Formula
           fftw_free(in); fftw_free(out);
           return 0;
       }
-    TEST_SCRIPT
+    EOS
 
-    system ENV.cc, "-o", "fftw", "fftw.c", "-lfftw3", *ENV.cflags.to_s.split
+    system ENV.cc, "-L#{lib}", "-I#{include}",
+                   "-o", "fftw", "fftw.c", "-lfftw3", *ENV.cflags.to_s.split
     system "./fftw"
   end
 end

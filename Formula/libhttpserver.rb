@@ -3,8 +3,9 @@ class Libhttpserver < Formula
   homepage "https://github.com/etr/libhttpserver"
   url "https://github.com/etr/libhttpserver/archive/v0.9.0.tar.gz"
   sha256 "fbdc0a44e92e78e8cc03b0a595e6190d2de002610a6467dc32d703e9c5486189"
-  head "https://github.com/etr/libhttpserver.git"
   revision 1
+
+  head "https://github.com/etr/libhttpserver.git"
 
   bottle do
     cellar :any
@@ -25,10 +26,10 @@ class Libhttpserver < Formula
   def install
     ENV.universal_binary if build.universal?
 
-    args = [
-      "--disable-dependency-tracking",
-      "--disable-silent-rules",
-      "--prefix=#{prefix}"
+    args = %W[
+      --disable-dependency-tracking
+      --disable-silent-rules
+      --prefix=#{prefix}
     ]
 
     system "./bootstrap"
@@ -45,7 +46,7 @@ class Libhttpserver < Formula
     pid = fork { exec "./hello_world" }
     sleep 1 # grace time for server start
     begin
-      assert_match /Hello World!!!/, shell_output("curl http://127.0.0.1:8080/hello")
+      assert_match "Hello World!!!", shell_output("curl http://127.0.0.1:8080/hello")
     ensure
       Process.kill 9, pid
       Process.wait pid

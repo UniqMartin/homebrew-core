@@ -6,6 +6,7 @@ class Liblwgeom < Formula
   stable do
     url "http://download.osgeo.org/postgis/source/postgis-2.1.5.tar.gz"
     sha256 "0d0e27f72f12b8dba456fbde25ed0f6913f42baf57332a7f1b9bbc6f29fddbf4"
+
     # Strip all the PostgreSQL functions from PostGIS configure.ac, to allow
     # building liblwgeom.dylib without needing PostgreSQL
     # NOTE: this will need to be maintained per postgis version
@@ -46,15 +47,13 @@ class Liblwgeom < Formula
     args = [
       "--disable-dependency-tracking",
       "--disable-nls",
-
       "--with-projdir=#{HOMEBREW_PREFIX}",
       "--with-jsondir=#{Formula["json-c"].opt_prefix}",
-
       # Disable extraneous support
       "--without-libiconv-prefix",
       "--without-libintl-prefix",
       "--without-raster", # this ensures gdal is not required
-      "--without-topology"
+      "--without-topology",
     ]
 
     if build.head?

@@ -1,9 +1,8 @@
 class Efl < Formula
   desc "Libraries for the Enlightenment window manager"
   homepage "https://www.enlightenment.org"
-  url "https://download.enlightenment.org/rel/libs/efl/efl-1.14.2.tar.gz"
-  sha256 "e5699d8183c1540fe45dddaf692254632f9131335e97a09cc313e866a150b42c"
-  revision 2
+  url "https://download.enlightenment.org/rel/libs/efl/efl-1.17.2.tar.gz"
+  sha256 "81c4662cfeb8de3675329f92d6c117588b4a0a37c94e4731dc342db438f23ca2"
 
   bottle do
     sha256 "a8e51818234a137bc021469bf37a52c84608d4e399420b71ff360682c8a7a8ae" => :el_capitan

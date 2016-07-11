@@ -47,31 +47,32 @@ class Mapnik < Formula
     harfbuzz = Formula["harfbuzz"].opt_prefix
     webp = Formula["webp"].opt_prefix
 
-    args = ["CC=\"#{ENV.cc}\"",
-            "CXX=\"#{ENV.cxx}\"",
-            "PREFIX=#{prefix}",
-            "CUSTOM_CXXFLAGS=\"-DBOOST_EXCEPTION_DISABLE\"",
-            "ICU_INCLUDES=#{icu}/include",
-            "ICU_LIBS=#{icu}/lib",
-            "JPEG_INCLUDES=#{jpeg}/include",
-            "JPEG_LIBS=#{jpeg}/lib",
-            "PNG_INCLUDES=#{libpng}/include",
-            "PNG_LIBS=#{libpng}/lib",
-            "HB_INCLUDES=#{harfbuzz}/include",
-            "HB_LIBS=#{harfbuzz}/lib",
-            "WEBP_INCLUDES=#{webp}/include",
-            "WEBP_LIBS=#{webp}/lib",
-            "TIFF_INCLUDES=#{libtiff}/include",
-            "TIFF_LIBS=#{libtiff}/lib",
-            "BOOST_INCLUDES=#{boost}/include",
-            "BOOST_LIBS=#{boost}/lib",
-            "PROJ_INCLUDES=#{proj}/include",
-            "PROJ_LIBS=#{proj}/lib",
-            "FREETYPE_CONFIG=#{freetype}/bin/freetype-config",
-            "NIK2IMG=False",
-            "CPP_TESTS=False", # too long to compile to be worth it
-            "INPUT_PLUGINS=all",
-           ]
+    args = [
+      "CC=\"#{ENV.cc}\"",
+      "CXX=\"#{ENV.cxx}\"",
+      "PREFIX=#{prefix}",
+      "CUSTOM_CXXFLAGS=\"-DBOOST_EXCEPTION_DISABLE\"",
+      "ICU_INCLUDES=#{icu}/include",
+      "ICU_LIBS=#{icu}/lib",
+      "JPEG_INCLUDES=#{jpeg}/include",
+      "JPEG_LIBS=#{jpeg}/lib",
+      "PNG_INCLUDES=#{libpng}/include",
+      "PNG_LIBS=#{libpng}/lib",
+      "HB_INCLUDES=#{harfbuzz}/include",
+      "HB_LIBS=#{harfbuzz}/lib",
+      "WEBP_INCLUDES=#{webp}/include",
+      "WEBP_LIBS=#{webp}/lib",
+      "TIFF_INCLUDES=#{libtiff}/include",
+      "TIFF_LIBS=#{libtiff}/lib",
+      "BOOST_INCLUDES=#{boost}/include",
+      "BOOST_LIBS=#{boost}/lib",
+      "PROJ_INCLUDES=#{proj}/include",
+      "PROJ_LIBS=#{proj}/lib",
+      "FREETYPE_CONFIG=#{freetype}/bin/freetype-config",
+      "NIK2IMG=False",
+      "CPP_TESTS=False", # too long to compile to be worth it
+      "INPUT_PLUGINS=all",
+    ]
 
     if build.with? "cairo"
       args << "CAIRO=True" # cairo paths will come from pkg-config

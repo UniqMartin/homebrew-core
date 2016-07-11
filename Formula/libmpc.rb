@@ -42,7 +42,24 @@ class Libmpc < Formula
         return 0;
       }
     EOS
-    system ENV.cc, "test.c", "-lgmp", "-lmpfr", "-lmpc", "-o", "test"
+
+    gmp = Formula["gmp"]
+    mpfr = Formula["mpfr"]
+    args = %W[
+      -o test
+      -L#{gmp.opt_lib}
+      -I#{gmp.opt_include}
+      -L#{mpfr.opt_lib}
+      -I#{mpfr.opt_include}
+      -L#{lib}
+      -I#{include}
+      test.c
+      -lgmp
+      -lmpfr
+      -lmpc
+    ]
+
+    system ENV.cc, *args
     system "./test"
   end
 end

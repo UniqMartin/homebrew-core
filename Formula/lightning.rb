@@ -16,11 +16,12 @@ class Lightning < Formula
   depends_on "binutils" => [:build, :optional]
 
   def install
-    args = [
-      "--disable-dependency-tracking",
-      "--disable-silent-rules",
-      "--prefix=#{prefix}"
+    args = %W[
+      --disable-dependency-tracking
+      --disable-silent-rules
+      --prefix=#{prefix}
     ]
+
     args << "--disable-disassembler" if build.without? "binutils"
 
     system "./configure", *args

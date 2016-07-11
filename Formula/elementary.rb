@@ -1,8 +1,8 @@
 class Elementary < Formula
   desc "Widgets and abstractions from the Enlightenment window manager"
   homepage "https://www.enlightenment.org"
-  url "https://download.enlightenment.org/rel/libs/elementary/elementary-1.14.0.tar.gz"
-  sha256 "aa06ca1b332b3cd29ffd136c1f10edf08a06906b3532785ce7e390c1cad6090e"
+  url "https://download.enlightenment.org/rel/libs/elementary/elementary-1.17.1.tar.gz"
+  sha256 "1ea60e4fdc823588096b449b3cfc6eff2fea86114ad5bd7f7990ace14c119aac"
 
   bottle do
     sha256 "2cc0ee68850d60c93d6210064142e6d20a575a4bca57e51976bbf0f0df987c2a" => :el_capitan

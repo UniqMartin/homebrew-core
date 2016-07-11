@@ -23,8 +23,8 @@ class Mawk < Formula
   end
 
   test do
-    version=`mawk '/version/ { print $2 }' #{prefix}/README`
-    assert_equal 0, $?.exitstatus
-    assert_equal version, "#{version}"
+    version_no_date = version.to_s.split("-").first
+    assert_match version_no_date,
+                 shell_output("mawk '/version/ { print $2 }' #{prefix}/README")
   end
 end

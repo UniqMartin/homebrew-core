@@ -25,14 +25,13 @@ class Lhasa < Formula
   end
 
   test do
-    data = [
-      %w[
-        31002d6c68302d0400000004000000f59413532002836255050000865a060001666f6f0
-        50050a4810700511400f5010000666f6f0a00
-      ].join
-    ].pack("H*")
+    data = %w[
+      31002d6c68302d0400000004000000f59413532002836255050000865a060001666f6f05
+      0050a4810700511400f5010000666f6f0a00
+    ].pack("H*H*")
 
     pipe_output("#{bin}/lha x -", data)
+    assert_predicate testpath/"foo", :exist?
     assert_equal "foo\n", (testpath/"foo").read
   end
 end

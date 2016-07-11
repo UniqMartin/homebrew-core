@@ -41,12 +41,14 @@ class Libhttpserver < Formula
   end
 
   test do
-    system ENV.cxx, pkgshare/"examples/hello_world.cpp",
-      "-o", "hello_world", "-lhttpserver", "-lcurl"
+    system ENV.cxx, "-L#{lib}", "-I#{include}",
+                    pkgshare/"examples/hello_world.cpp",
+                    "-o", "hello_world", "-lhttpserver", "-lcurl"
     pid = fork { exec "./hello_world" }
     sleep 1 # grace time for server start
     begin
-      assert_match "Hello World!!!", shell_output("curl http://127.0.0.1:8080/hello")
+      assert_match "Hello World!!!",
+                   shell_output("curl http://127.0.0.1:8080/hello")
     ensure
       Process.kill 9, pid
       Process.wait pid

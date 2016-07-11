@@ -22,7 +22,8 @@ class Modules < Formula
       --prefix=#{prefix}
       --datarootdir=#{share}
       --disable-versioning
-      CPPFLAGS=-DUSE_INTERP_ERRORLINE]
+      CPPFLAGS=-DUSE_INTERP_ERRORLINE
+    ]
     args << "--without-x" if build.without? "x11"
     system "./configure", *args
     system "make", "install"
@@ -37,7 +38,7 @@ class Modules < Formula
   end
 
   test do
-    system *%W[#{prefix}/Modules/bin/modulecmd --version]
+    system prefix/"Modules/bin/modulecmd", "--version"
     system "zsh", "-c", "source #{prefix}/Modules/init/zsh; module"
   end
 end

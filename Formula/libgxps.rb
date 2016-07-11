@@ -32,12 +32,12 @@ class Libgxps < Formula
   depends_on "gtk+" => :optional
 
   def install
-    args = [
-      "--disable-debug",
-      "--disable-dependency-tracking",
-      "--disable-silent-rules",
-      "--enable-man",
-      "--prefix=#{prefix}"
+    args = %W[
+      --disable-debug
+      --disable-dependency-tracking
+      --disable-silent-rules
+      --enable-man
+      --prefix=#{prefix}
     ]
 
     args << "--without-libjpeg" if build.without? "libjpeg"
@@ -54,42 +54,39 @@ class Libgxps < Formula
   end
 
   test do
-    mkdir_p [
-      (testpath/"Documents/1/Pages/_rels/"),
-      (testpath/"_rels/")
-    ]
+    (testpath/"Documents/1/Pages/_rels").mkpath
+    (testpath/"_rels").mkpath
 
     (testpath/"FixedDocumentSequence.fdseq").write <<-EOS.undent
       <FixedDocumentSequence>
       <DocumentReference Source="/Documents/1/FixedDocument.fdoc"/>
       </FixedDocumentSequence>
-      EOS
+    EOS
     (testpath/"Documents/1/FixedDocument.fdoc").write <<-EOS.undent
       <FixedDocument>
       <PageContent Source="/Documents/1/Pages/1.fpage"/>
       </FixedDocument>
-      EOS
+    EOS
     (testpath/"Documents/1/Pages/1.fpage").write <<-EOS.undent
       <FixedPage Width="1" Height="1" xml:lang="und" />
-      EOS
+    EOS
     (testpath/"_rels/.rels").write <<-EOS.undent
       <Relationships>
       <Relationship Target="/FixedDocumentSequence.fdseq" Type="http://schemas.microsoft.com/xps/2005/06/fixedrepresentation"/>
       </Relationships>
-      EOS
-    [
-      "_rels/FixedDocumentSequence.fdseq.rels",
-      "Documents/1/_rels/FixedDocument.fdoc.rels",
-      "Documents/1/Pages/_rels/1.fpage.rels"
+    EOS
+    %w[
+      _rels/FixedDocumentSequence.fdseq.rels
+      Documents/1/_rels/FixedDocument.fdoc.rels
+      Documents/1/Pages/_rels/1.fpage.rels
     ].each do |f|
       (testpath/f).write <<-EOS.undent
         <Relationships />
-        EOS
+      EOS
     end
 
-    Dir.chdir(testpath) do
-      system "/usr/bin/zip", "-qr", (testpath/"test.xps"), "_rels", "Documents", "FixedDocumentSequence.fdseq"
-    end
-    system "#{bin}/xpstopdf", (testpath/"test.xps")
+    system "/usr/bin/zip", "-qr", testpath/"test.xps",
+                           "_rels", "Documents", "FixedDocumentSequence.fdseq"
+    system "#{bin}/xpstopdf", testpath/"test.xps"
   end
 end

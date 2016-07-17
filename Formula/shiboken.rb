@@ -15,11 +15,11 @@ class Shiboken < Formula
     sha256 "81a1a53a3abdc3b21f5716f30ca1e3be063821f746e7e390ab51e97d45de29c6" => :mountain_lion
   end
 
-  depends_on "cmake" => :build
-  depends_on "qt"
-
   # don't use depends_on :python because then bottles install Homebrew's python
   option "without-python", "Build without python 2 support"
+
+  depends_on "cmake" => :build
+  depends_on "qt"
   depends_on :python => :recommended if MacOS.version <= :snow_leopard
   depends_on :python3 => :optional
 
@@ -32,7 +32,7 @@ class Shiboken < Formula
         # Building the tests also runs them.
         args << "-DBUILD_TESTS=ON"
         if python == "python3" && Formula["python3"].installed?
-          python_framework = (Formula["python3"].opt_prefix)/"Frameworks/Python.framework/Versions/#{version}"
+          python_framework = Formula["python3"].opt_prefix/"Frameworks/Python.framework/Versions/#{version}"
           args << "-DPYTHON3_INCLUDE_DIR:PATH=#{python_framework}/Headers"
           args << "-DPYTHON3_LIBRARY:FILEPATH=#{python_framework}/lib/libpython#{version}.dylib"
         end

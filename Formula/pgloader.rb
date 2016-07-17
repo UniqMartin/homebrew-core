@@ -3,8 +3,9 @@ class Pgloader < Formula
   homepage "https://github.com/dimitri/pgloader"
   url "https://github.com/dimitri/pgloader/archive/v3.2.2.tar.gz"
   sha256 "5fe5c115e277a9dd616b1077f89bffdf978bc6983ce62d99af9a218142c39e40"
-  head "https://github.com/dimitri/pgloader.git"
   revision 1
+
+  head "https://github.com/dimitri/pgloader.git"
 
   bottle do
     sha256 "31d9ea383b24bb08f5bc0b89f31fa93938a8e08e7c1809ae4647dd4514136f05" => :el_capitan
@@ -324,15 +325,15 @@ class Pgloader < Formula
     socket_dir = Pathname.new(socket_dir)
     mkdir_p socket_dir
 
-    postgres_command = [
-      "postgres",
-      "--listen_addresses=",
-      "--unix_socket_directories=#{socket_dir}"
+    postgres_command = %W[
+      postgres
+      --listen_addresses=
+      --unix_socket_directories=#{socket_dir}
     ]
 
-    IO.popen(postgres_command * " ") do |postgres|
+    IO.popen(postgres_command.join(" ")) do |postgres|
       begin
-        ohai postgres_command * " "
+        ohai postgres_command.join(" ")
         # Postgres won't create the socket until it's ready for connections, but
         # if it fails to start, we'll be waiting for the socket forever. So we
         # time out quickly; this is simpler than mucking with child process

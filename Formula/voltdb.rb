@@ -17,8 +17,9 @@ class Voltdb < Formula
   def install
     system "ant"
 
-    inreplace Dir["bin/*"] - ["bin/voltadmin", "bin/voltdb", "bin/rabbitmqloader"],
-      %r{VOLTDB_LIB=\$VOLTDB_HOME\/lib}, "VOLTDB_LIB=$VOLTDB_HOME/lib/voltdb"
+    files = Dir["bin/*"] - %w[bin/voltadmin bin/voltdb bin/rabbitmqloader]
+    inreplace files, %r{VOLTDB_LIB=\$VOLTDB_HOME/lib},
+                     "VOLTDB_LIB=$VOLTDB_HOME/lib/voltdb"
 
     (lib/"voltdb").install Dir["lib/*"]
     lib.install_symlink lib/"voltdb/python"

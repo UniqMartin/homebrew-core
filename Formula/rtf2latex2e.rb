@@ -22,12 +22,12 @@ class Rtf2latex2e < Formula
   end
 
   test do
-    (testpath/"test.rtf").write <<-'EOF'.undent
-    {\rtf1\ansi
-    {\b hello} world
-    }
-    EOF
+    (testpath/"test.rtf").write <<-'EOS'.undent
+      {\rtf1\ansi
+      {\b hello} world
+      }
+    EOS
     system "#{bin}/rtf2latex2e", "-n", "test.rtf"
-    system %q(cat test.tex | grep '\textbf{hello} world')
+    system "grep", "\\textbf{hello} world", "test.tex"
   end
 end

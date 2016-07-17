@@ -27,6 +27,8 @@ class Uptimed < Formula
     system "make", "install"
   end
 
+  plist_options :manual => "uptimed -f -p #{HOMEBREW_PREFIX}/var/uptimed.pid"
+
   def plist; <<-EOS.undent
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -56,4 +58,3 @@ class Uptimed < Formula
     system "#{bin}/uprecords"
   end
 end
-

@@ -17,10 +17,19 @@ class Ne < Formula
   end
 
   test do
+    (testpath/"test.txt").write <<-EOS.undent
+      This is a test document.
+    EOS
+    (testpath/"test_ne").write <<-EOS.undent
+      GotoLine 2
+      InsertString line 2
+      Exit
+    EOS
+
     ENV["TERM"] = "xterm"
-    (testpath/"test.txt").write("This is a test document.\n")
-    (testpath/"test_ne").write("GotoLine 2\nInsertString line 2\nExit\n")
-    system "script", "-q", "/dev/null", "#{bin}/ne", "--macro", "#{(testpath/"test_ne")}", "#{(testpath/"test.txt")}"
-    assert_equal "This is a test document.\nline 2", File.read("#{testpath}/test.txt")
+    system "script", "-q", "/dev/null",
+           "#{bin}/ne", "--macro", testpath/"test_ne", testpath/"test.txt"
+    assert_equal "This is a test document.\nline 2",
+                 (testpath/"test.txt").read
   end
 end

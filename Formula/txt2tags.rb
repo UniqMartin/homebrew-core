@@ -12,8 +12,8 @@ class Txt2tags < Formula
   end
 
   test do
-    (testpath/"test.txt").write("\n= Title =")
+    (testpath/"test.txt").write "\n= Title ="
     system bin/"txt2tags", "-t", "html", "--no-headers", "test.txt"
-    assert_match %r{<H1>Title</H1>}, File.read("test.html")
+    assert_match "<H1>Title</H1>", (testpath/"test.html").read
   end
 end

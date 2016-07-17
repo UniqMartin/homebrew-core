@@ -26,7 +26,8 @@ class Rapidjson < Formula
   end
 
   test do
-    system ENV.cxx, "#{share}/doc/RapidJSON/examples/capitalize/capitalize.cpp", "-o", "capitalize"
-    assert_equal '{"A":"B"}',  pipe_output("./capitalize", '{"a":"b"}')
+    system ENV.cxx, "#{share}/doc/RapidJSON/examples/capitalize/capitalize.cpp",
+                    "-o", "capitalize"
+    assert_equal '{"A":"B"}', pipe_output("./capitalize", '{"a":"b"}')
   end
 end

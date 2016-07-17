@@ -65,8 +65,11 @@ class Netpbm < Formula
   end
 
   test do
-    system ("#{bin}/pngtopam #{test_fixtures("test.png")} -alphapam >> test.pam")
-    system "#{bin}/pamdice", "test.pam", "-outstem", "#{testpath}/testing"
-    assert File.exist?("testing_0_0.")
+    png = test_fixtures("test.png")
+    pam = testpath/"test.pam"
+
+    pam.write shell_output("#{bin}/pngtopam #{png} -alphapam")
+    system "#{bin}/pamdice", pam, "-outstem", testpath/"testing"
+    assert_predicate testpath/"testing_0_0.", :exist?
   end
 end

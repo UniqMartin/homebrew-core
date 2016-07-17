@@ -36,9 +36,9 @@ class Renameutils < Formula
   end
 
   test do
-    (testpath/"test.txt").write ("Hello World!")
+    (testpath/"test.txt").write "Hello World!"
     pipe_output("#{bin}/icp test.txt", ".2\n")
-    assert_equal File.read("test.txt"), File.read("test.txt.2")
+    assert_equal (testpath/"test.txt").read, (testpath/"test.txt.2").read
   end
 end
 

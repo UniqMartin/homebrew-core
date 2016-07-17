@@ -45,27 +45,29 @@ class Nailgun < Formula
   end
 
   def install
-    system "make", "install", "CC=#{ENV.cc}", "PREFIX=#{prefix}", "CFLAGS=#{ENV.cflags}"
+    system "make", "install", "CC=#{ENV.cc}",
+                              "PREFIX=#{prefix}",
+                              "CFLAGS=#{ENV.cflags}"
+
     if build.head?
-      require 'rexml/document'
+      require "rexml/document"
       pom_xml = REXML::Document.new(File.new("pom.xml"))
       jar_version = REXML::XPath.first(pom_xml, "string(/pom:project/pom:version)", "pom" => "http://maven.apache.org/POM/4.0.0")
       system "mvn", "clean", "install"
       libexec.install Dir["nailgun-server/target/*.jar"]
     else
-      jar_version=version
+      jar_version = version
       libexec.install resource("nailgun-jar").files("nailgun-server-#{version}.jar")
     end
     bin.write_jar_script libexec/"nailgun-server-#{jar_version}.jar", "ng-server", "-server"
   end
 
   test do
-    fork { exec "ng-server", "8765" }
+    fork { exec bin/"ng-server", "8765" }
     sleep 1 # the server does not begin listening as fast as we can start a background process
-    system "ng", "--nailgun-port", "8765", "ng-version"
-    Kernel.system "ng", "--nailgun-port", "8765", "ng-stop"
+    system bin/"ng", "--nailgun-port", "8765", "ng-version"
+    Kernel.system bin/"ng", "--nailgun-port", "8765", "ng-stop"
     # ng-stop always returns a non-zero exit code even on successful exit
     true
   end
 end
-

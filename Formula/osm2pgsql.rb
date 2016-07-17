@@ -22,13 +22,13 @@ class Osm2pgsql < Formula
   depends_on "lua" => :recommended
 
   def install
-    args = [
-      "--prefix=#{prefix}",
-      "--disable-dependency-tracking",
-      "--with-proj=#{Formula["proj"].opt_prefix}",
-      "--with-boost=#{Formula["boost"].opt_prefix}",
-      "--with-zlib=/usr",
-      "--with-bzip2=/usr"
+    args = %W[
+      --prefix=#{prefix}
+      --disable-dependency-tracking
+      --with-proj=#{Formula["proj"].opt_prefix}
+      --with-boost=#{Formula["boost"].opt_prefix}
+      --with-zlib=/usr
+      --with-bzip2=/usr
     ]
     puts args
     if build.with? "protobuf-c"

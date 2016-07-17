@@ -46,7 +46,7 @@ class Wxpython < Formula
     # set it to use wxPython's prefix instead
     # See #47187.
     inreplace %w[wxPython/config.py wxPython/wx/build/config.py],
-      "WXPREFIX +", "'#{prefix}' +"
+              "WXPREFIX +", "'#{prefix}' +"
 
     args = [
       "WXPORT=osx_cocoa",

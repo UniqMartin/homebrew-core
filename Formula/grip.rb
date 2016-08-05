@@ -1,4 +1,6 @@
 class Grip < Formula
+  include Language::Python::Virtualenv
+
   desc "GitHub Markdown previewer"
   homepage "https://github.com/joeyespo/grip"
   url "https://github.com/joeyespo/grip/archive/v4.3.2.tar.gz"
@@ -69,18 +71,7 @@ class Grip < Formula
   end
 
   def install
-    ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python2.7/site-packages"
-    resources.each do |r|
-      r.stage do
-        system "python", *Language::Python.setup_install_args(libexec/"vendor")
-      end
-    end
-
-    ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python2.7/site-packages"
-    system "python", *Language::Python.setup_install_args(libexec)
-
-    bin.install Dir[libexec/"bin/*"]
-    bin.env_script_all_files(libexec/"bin", :PYTHONPATH => ENV["PYTHONPATH"])
+    virtualenv_install_with_resources
   end
 
   test do
